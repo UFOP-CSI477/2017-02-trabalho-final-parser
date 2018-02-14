@@ -64,19 +64,69 @@ class Tag extends CI_Controller
 	public function confirmarAlteracao()
 	{
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-		$this->form_validation->set_rules('ipUsuario', 'Nome', 'required');
-		$this->form_validation->set_rules('ipSenha', 'Senha', 'required');
+		$this->form_validation->set_rules('ipNome', 'Nome', 'required');
+		$this->form_validation->set_rules('ipDefinicao', 'Definicao', 'required');
+		$this->form_validation->set_rules('ipGrupo', 'Grupo', 'required');
 
-		$id = $_POST['id'];
+		// $id = $_POST['id'];
 		if($this->form_validation->run()) {
+            $dados = array('TagId' => $_POST['id'],
+                            'Name' => $_POST['ipNome'],
+                            'Definition' => $_POST['ipDefinicao'],
+                            'Group' => $_POST['ipGrupo']);
+            $jsonDados = json_encode($data);
+            $ch = curl_init('http://localhost:8090/api/tag');
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            $result = curl_exec($ch);
+            $resposta = json_decode($result);
+            // FAZER O JSON E MANDAR PRA API
+            if($resposta['Code'] != 2){
+                echo "<script language='javascript'>alert('Tag alterada com sucesso'); document.location=\"exibirTag/$id\";</script>";
+                die;
+            }else{
+			    $this->alterar($id);
+            }
+		} else {
+			$this->alterar($id);
+		}
+	}
+	public function confirmarCriacao()
+	{
+		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		$this->form_validation->set_rules('ipNome', 'Nome', 'required');
+		$this->form_validation->set_rules('ipDefinicao', 'Definicao', 'required');
+		$this->form_validation->set_rules('ipGrupo', 'Grupo', 'required');
 
-			$dados = [
-    		'nome' => $_POST['ipUsuario'],
-    		'senha' => $_POST['ipSenha']
-			];
-			$this->Usuarios_model->updPorId($id, $dados);
-			echo "<script language='javascript'>alert('Usuário alterado com sucesso'); document.location=\"exibirPerfil/$id\";</script>";
-			die;
+		// $id = $_POST['id'];
+		if($this->form_validation->run()) {
+            $dados = array('UserId' => $_SESSION['idUsuario'],
+                            'Name' => $_POST['ipNome'],
+                            'Definition' => $_POST['ipDefinicao'],
+                            'Group' => $_POST['ipGrupo']);
+            $jsonDados = json_encode($data);
+            $ch = curl_init('http://localhost:8090/api/tag');
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            $result = curl_exec($ch);
+            $resposta = json_decode($result);
+            // FAZER O JSON E MANDAR PRA API
+            if($resposta['Code'] != 2){
+                echo "<script language='javascript'>alert('Tag criada com sucesso'); document.location=\"exibirTag/$id\";</script>";
+                die;
+            }else{
+			    $this->alterar($id);
+            }
 		} else {
 			$this->alterar($id);
 		}
