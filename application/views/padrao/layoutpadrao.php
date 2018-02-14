@@ -15,7 +15,7 @@
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
   <header class="main-header">
-    <a href="../../index2.html" class="logo">
+    <a href="<?php echo base_url('perfil/exibirPerfil/' . $id); ?>" class="logo">
       <span class="logo-lg"><b>Parser</b>UFOP</span>
     </a>
     <nav class="navbar navbar-static-top">
@@ -63,7 +63,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../forms/general.html"><i class="fa fa-edit"></i>Alterar dados do perfil</a></li>
+            <li><a href="<?php echo base_url('perfil/alterar/' . $id); ?>"><i class="fa fa-edit"></i>Alterar dados do usuário</a></li>
           </ul>
         </li>
         <li><a href="<?php echo base_url('login'); ?>"><i class="fa fa-spinner"></i> <span>Sair</span></a></li>
@@ -71,10 +71,10 @@
     </section>
   </aside>
   <div class="content-wrapper">
+  <?php $this->load->view($view, $dados); ?>
   </div>
   <div class="control-sidebar-bg"></div>
 </div>
-
 <script src="<?php echo base_url('assets/js/jquery/jquery.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/bootstrap/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/fastclick/fastclick.js'); ?>"></script>

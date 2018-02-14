@@ -28,6 +28,7 @@ class Login extends CI_Controller
 		$this->Usuarios_model->inserir();
 
 		echo "<script language='javascript'>alert('Usuário criado com sucesso.'); history.back();</script>";
+		die;
 	}
 
 	public function autenticar()
@@ -37,7 +38,9 @@ class Login extends CI_Controller
 		$this->form_validation->set_rules('ipSenha', '', 'callback_validarSenha');
 
 		if($this->form_validation->run()) {
-			redirect('perfil/exibirPerfil');
+			$this->Usuarios_model->nome = $_POST['ipUsuario'];
+			$usuario = $this->Usuarios_model->getPorNomeSenha();
+			redirect('perfil/exibirPerfil/' . $usuario->id_usuario);
 		} else {
 			$this->index();
 		}
