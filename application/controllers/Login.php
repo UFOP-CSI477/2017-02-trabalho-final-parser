@@ -38,8 +38,16 @@ class Login extends CI_Controller
 		$this->form_validation->set_rules('ipSenha', '', 'callback_validarSenha');
 
 		if($this->form_validation->run()) {
+
 			$this->Usuarios_model->nome = $_POST['ipUsuario'];
 			$usuario = $this->Usuarios_model->getPorNomeSenha();
+
+			$sessao = [
+			'id' => $usuario->id_usuario,
+			'nome' => $usuario->nome
+			];
+			$this->session->set_userdata($sessao);
+
 			redirect('perfil/exibirPerfil/' . $usuario->id_usuario);
 		} else {
 			$this->index();
