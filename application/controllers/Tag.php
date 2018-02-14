@@ -95,7 +95,26 @@ class Tag extends CI_Controller
 		} else {
 			$this->alterar($id);
 		}
+    }
+
+	public function criar($id)
+	{
+		// $tag = $this->Tags_model->getPorId($id);
+		// $dadosTags= [
+		// 'id' => $id,
+		// 'nome' => $tag->nome,
+		// 'definicao' => $tag->definicao
+		// ];
+
+		// $dados = [
+		// 'view' => 'tag/alterar',
+		// 'id' => $id,
+		// 'dados' => $dadosTags
+		// ];
+
+		$this->load->view('padrao/layoutpadrao', $dados);	
 	}
+
 	public function confirmarCriacao()
 	{
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
