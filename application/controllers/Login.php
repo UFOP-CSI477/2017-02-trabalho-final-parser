@@ -47,7 +47,7 @@ class Login extends CI_Controller
 		$this->Usuarios_model->senha = $_POST['ipSenha'];
 		$this->Usuarios_model->inserir();
 
-		echo "<script language='javascript'>alert('Usuário criado com sucesso.'); history.back();</script>";
+		echo "<script language='javascript'>alert('Usuário criado com sucesso.'); document.location='/parserufop/login';</script>";
 		die;
 	}
 

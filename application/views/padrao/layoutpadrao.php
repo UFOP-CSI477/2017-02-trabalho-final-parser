@@ -37,7 +37,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?=base_url('perfil/emDesenvolvimento')?>"><i class="fa fa-upload"></i>Cadastrar</a></li>
+            <li><a href="<?=base_url('tag/cadastrar')?>"><i class="fa fa-upload"></i>Cadastrar</a></li>
             <li><a href="<?=base_url('perfil/emDesenvolvimento')?>"><i class="fa fa-edit"></i>Editar</a></li>
             <li><a href="<?=base_url('perfil/emDesenvolvimento')?>"><i class="fa fa-search"></i>Pesquisar</a></li>
           </ul>
