@@ -15,6 +15,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+CREATE DATABASE IF NOT EXISTS `ftc_regex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `manutencao`;
+
+CREATE USER `php`@`localhost` identified by "333";
+GRANT ALL PRIVILEGES ON ftc_regex.* TO `php`@`localhost`;
+FLUSH PRIVILEGES;
 --
 -- Table structure for table `comentarios`
 --
