@@ -81,13 +81,15 @@ class Tag extends CI_Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Content-Type: application/json',
+                'Accept: application/json',
                 'Content-Length: ' . strlen($data_string))
             );
             $result = curl_exec($ch);
             $resposta = json_decode($result);
+			$msg = $resposta['content'];
             // FAZER O JSON E MANDAR PRA API
             if($resposta['Code'] != 2){
-                echo "<script language='javascript'>alert('Tag alterada com sucesso'); document.location=\"exibirTag/$id\";</script>";
+                echo "<script language='javascript'>alert('$msg'); document.location=\"exibirTag/$id\";</script>";
                 die;
             }else{
 			    $this->alterar($id);
@@ -124,8 +126,7 @@ class Tag extends CI_Controller
 
 		// $id = $_POST['id'];
 		if($this->form_validation->run()) {
-            $dados = array('UserId' => $_SESSION['idUsuario'],
-                            'Name' => $_POST['ipNome'],
+            $dados = array('Name' => $_POST['ipNome'],
                             'Definition' => $_POST['ipDefinicao'],
                             'Group' => $_POST['ipGrupo']);
             $jsonDados = json_encode($data);
@@ -134,14 +135,16 @@ class Tag extends CI_Controller
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Accept: application/json',
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($data_string))
             );
             $result = curl_exec($ch);
-            $resposta = json_decode($result);
+			$resposta = json_decode($result);
+			$msg = $resposta['content'];
             // FAZER O JSON E MANDAR PRA API
-            if($resposta['Code'] != 2){
-                echo "<script language='javascript'>alert('Tag criada com sucesso'); document.location=\"exibirTag/$id\";</script>";
+            if($resposta['code'] != 2){
+                echo "<script language='javascript'>alert('$msg'); document.location=\"exibirTag/$id\";</script>";
                 die;
             }else{
 			    $this->alterar($id);
