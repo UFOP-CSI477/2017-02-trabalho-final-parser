@@ -4,7 +4,7 @@
 
 * além dos pacotes padrões do PHP, necessita-se php_mysqld e php_curl
 
-* dotnet core para rodar a API utilizada.
+* dotnet core para rodar a API utilizada. - https://www.microsoft.com/net/learn/get-started/
 
 * Servidor WEB, (Apache, Nginx, etc). E configuração para code-igniter (Nginx Codeigniter / URLs amigáveis Apache)
 
