@@ -1,7 +1,18 @@
 <?php
 
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Classe controller para operacoes do perfil do usuario
+ * @author Silvandro Oliveira, Maycon Junior
+ * @package controllers
+ */
 class Perfil extends CI_Controller
 {
+	/**
+	 * Construtor da classe
+	 * @access public
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -10,8 +21,13 @@ class Perfil extends CI_Controller
 		$this->load->model('UsuariosRelacao_model');
 	}
 
-	public function exibirPerfil($id)
+	/**
+	 * Metodo que exibe a view com informacoes do perfil do usuario
+	 * @access public
+	 */
+	public function exibirPerfil()
 	{
+		$id = $this->session->userdata('id');
 		$usuario = $this->Usuarios_model->getPorId($id);
 		$tags = $this->Tags_model->getTotalPorUsuario($id);
 		$seguidores = $this->UsuariosRelacao_model->getTotalSeguidores($id);
@@ -26,51 +42,19 @@ class Perfil extends CI_Controller
 
 		$dados = [
 		'view' => 'perfil/principal',
-		'id' => $id,
 		'dados' => $dadosPerfil
 		];
 
 		$this->load->view('padrao/layoutpadrao', $dados);
 	}
 
-
-	public function alterar($id)
+	/**
+	 * Metodo que exibe alert de funcionalidade ainda nao desenvolvida
+	 * @access public
+	 */
+	public function emDesenvolvimento()
 	{
-		$usuario = $this->Usuarios_model->getPorId($id);
-		$dadosPerfil = [
-		'id' => $id,
-		'nome' => $usuario->nome,
-		'senha' => $usuario->senha
-		];
-
-		$dados = [
-		'view' => 'perfil/alterar',
-		'id' => $id,
-		'dados' => $dadosPerfil
-		];
-
-		$this->load->view('padrao/layoutpadrao', $dados);	
-	}
-
-
-	public function confirmarAlteracao()
-	{
-		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-		$this->form_validation->set_rules('ipUsuario', 'Nome', 'required');
-		$this->form_validation->set_rules('ipSenha', 'Senha', 'required');
-
-		$id = $_POST['id'];
-		if($this->form_validation->run()) {
-
-			$dados = [
-    		'nome' => $_POST['ipUsuario'],
-    		'senha' => $_POST['ipSenha']
-			];
-			$this->Usuarios_model->updPorId($id, $dados);
-			echo "<script language='javascript'>alert('Usuário alterado com sucesso'); document.location=\"exibirPerfil/$id\";</script>";
-			die;
-		} else {
-			$this->alterar($id);
-		}
+		echo "<script>alert('Funcionalidade ainda não desenvolvida'); document.location='exibirPerfil';</script>";
+		die;
 	}
 }
