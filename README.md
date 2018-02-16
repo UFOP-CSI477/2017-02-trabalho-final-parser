@@ -10,6 +10,8 @@
 
 * API FTCRegex clonada do repositório https://github.com/mayc0njr/FTCRegex.
 
+* A API FTCRegex é usada para validação das Tags de expressão regular, sendo seu uso restrito à função "Cadastrar Tags". Ou seja, apenas para visualizar tags já cadastradas ou funções que não criam novas tags, seu uso é dispensável.
+
 # Execucao
 * Copiar a pasta do projeto para a raiz web do servidor, ou para o diretório definido nas configurações do servidor.
 
