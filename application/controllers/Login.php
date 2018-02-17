@@ -1,36 +1,60 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-	
+
+/**
+ * Classe controller para operacoes de login do usuario
+ * @author Silvandro Oliveira, Maycon Junior
+ * @package controllers
+ */	
 class Login extends CI_Controller
 {
+	/**
+	 * Construtor da classe
+	 * @access public
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('Usuarios_model');
 	}
 	
+	/**
+	 * Metodo que exibe a view inicial para acesso a aplicacao
+	 * @access public
+	 */
 	public function index()
 	{
 		$this->load->view('login/acesso');
 	}
 
+	/**
+	 * Metodo que exibe a view para criacao de usuario
+	 * @access public
+	 */
 	public function criarUsuario()
 	{
 		$this->load->view('login/criar');	
 	}
 
-
+	/**
+	 * Metodo que realiza a persistencia de dados do usuario criado
+	 * @access public
+	 */
 	public function confirmarCriacao()
 	{
 		$this->Usuarios_model->nome = $_POST['ipUsuario'];
 		$this->Usuarios_model->senha = $_POST['ipSenha'];
 		$this->Usuarios_model->inserir();
 
-		echo "<script language='javascript'>alert('Usuário criado com sucesso.'); history.back();</script>";
+		echo "<script language='javascript'>alert('Usuário criado com sucesso.'); document.location='/parserufop/login';</script>";
 		die;
 	}
 
+	/**
+	 * Metodo que valida os dados e realiza a autenticacao do usuario
+	 * @access public
+	 */
 	public function autenticar()
 	{
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -38,15 +62,28 @@ class Login extends CI_Controller
 		$this->form_validation->set_rules('ipSenha', '', 'callback_validarSenha');
 
 		if($this->form_validation->run()) {
+
 			$this->Usuarios_model->nome = $_POST['ipUsuario'];
 			$usuario = $this->Usuarios_model->getPorNomeSenha();
-			redirect('perfil/exibirPerfil/' . $usuario->id_usuario);
+
+			$sessao = [
+			'id' => $usuario->id_usuario,
+			'nome' => $usuario->nome
+			];
+			$this->session->set_userdata($sessao);
+
+			redirect('perfil/exibirPerfil/');
 		} else {
 			$this->index();
 		}
 	}
 
-
+	/**
+	 * Metodo callback que valida o nome do usuario
+	 * @access public
+	 * @param string $nome Nome do usuario
+	 * @return boolean Resultado da validacao
+	 */
 	public function validarUsuario($nome)
 	{
 		$this->Usuarios_model->nome = $nome;
@@ -58,6 +95,12 @@ class Login extends CI_Controller
 		return true;
 	}
 
+	/**
+	 * Metodo callback que valida a senha do usuario
+	 * @access public
+	 * @param string $senha Senha do usuario
+	 * @return boolean Resultado da validacao
+	 */
 	public function validarSenha($senha)
 	{
 		$this->Usuarios_model->nome = $_POST['ipUsuario'];
