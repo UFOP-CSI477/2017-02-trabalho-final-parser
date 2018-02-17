@@ -21,3 +21,5 @@
 * Copiar a pasta do projeto para a raiz web do servidor, ou para o diretório definido nas configurações do servidor.
 
 * Rodar a API FTC Regex. (No repositório clonado, execute na raiz do mesmo "dotnet run").
+
+* Acessar a Webpage http://localhost/parserufop
